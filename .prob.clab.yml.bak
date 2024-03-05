@@ -1,0 +1,29 @@
+name: prob
+prefix: ""
+topology:
+  kinds:
+    vr-n9kv:
+      image: asia.gcr.io/networkcontest/vr-n9kv:9.3.9
+    linux:
+      image: asia.gcr.io/networkcontest/netshoot:0.0.0
+  nodes:
+    n9kv1:
+      kind: vr-n9kv
+      startup-config: config/n9kv1-startup.cfg
+    n9kv2:
+      kind: vr-n9kv
+      startup-config: config/n9kv2-startup.cfg
+    linux1:
+      kind: linux
+      exec:
+        - /sbin/ip addr add 192.168.10.2/24 dev eth1
+        - /sbin/ip route add 192.168.0.0/16 via 192.168.10.1
+    linux2:
+      kind: linux
+      exec:
+        - /sbin/ip addr add 192.168.30.2/24 dev eth1
+        - /sbin/ip route add 192.168.0.0/16 via 192.168.30.1
+  links:
+    - endpoints: ["n9kv1:eth1", "n9kv2:eth1"]
+    - endpoints: ["n9kv1:eth2", "linux1:eth1"]
+    - endpoints: ["n9kv2:eth2", "linux2:eth1"]
