@@ -1,0 +1,27 @@
+!
+! Zebra configuration saved from vty
+!   2023/12/26 17:14:16
+!
+frr version 7.5.1_git
+frr defaults traditional
+!
+hostname router2
+domainname 
+!
+!
+!
+!
+!
+interface eth1
+ ip ospf hello-interval 30
+ ip ospf dead-interval 15
+!
+router ospf
+ network 192.168.1.0/24 area 0.0.0.0
+ network 192.168.3.0/24 area 0.0.0.0
+ network 192.168.12.0/24 area 0.0.0.0
+!
+!
+!
+line vty
+!
